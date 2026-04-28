@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "featgen", "feat/*", "fix/*", "docs/*"]
+    paths:
+      - "**/*.py"
+      - "**/*.ipynb"
+      - ".github/workflows/ci.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "**/*.py"
+      - "**/*.ipynb"
+      - ".github/workflows/ci.yml"
+
+jobs:
+  # ------------------------------------------------------------------
+  # 1. Lint Python et Notebooks
+  # ------------------------------------------------------------------
+  lint:
+    name: Lint .py et .ipynb
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+
+      - name: Configurer Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Installer les outils de lint
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff nbqa
+
+      # ------------------------------------------------------------------
+      # Lint fichiers Python (.py)
+      # ------------------------------------------------------------------
+      - name: Lint fichiers Python (.py)
+        run: |
+          find . -type f -name "*.py" \
+            ! -path "./.git/*" \
+            ! -path "./.venv/*" \
+            ! -path "./venv/*" \
+            ! -path "*/__pycache__/*" \
+            ! -path "*/.ipynb_checkpoints/*" \
+            ! -path "./build/*" \
+            -print0 | xargs -0 -r ruff check
+
+      # ------------------------------------------------------------------
+      # Lint notebooks (.ipynb) — désactivé temporairement
+      # Décommenter quand les notebooks seront prêts pour le lint
+      # ------------------------------------------------------------------
+      # - name: Lint notebooks (.ipynb)
+      #   run: |
+      #     nbqa ruff . --ignore E402 \
+      #       --exclude='(\.git|\.venv|venv|__pycache__|\.ipynb_checkpoints|build)'
+
+  # ------------------------------------------------------------------
+  # 2. Vérification du titre de Pull Request
+  # ------------------------------------------------------------------
+  check-pr-title:
+    name: Vérification titre PR
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Vérifier le titre de la PR
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "Titre PR : $PR_TITLE"
+          regex='^(feat|fix|docs|style|refactor|perf|test|chore|ci|revert)(\([a-z0-9._/-]+\))?: .+$'
+          if [[ ! "$PR_TITLE" =~ $regex ]]; then
+            echo "Titre de PR invalide."
+            echo "Format attendu : type(scope): description"
+            echo "Types autorisés : feat, fix, docs, style, refactor, perf, test, chore, ci, revert"
+            echo "Exemple : feat(linux): ajoute diagrammes mermaid chapitres 1-4"
+            exit 1
+          fi

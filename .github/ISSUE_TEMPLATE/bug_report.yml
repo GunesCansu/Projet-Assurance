@@ -1,0 +1,68 @@
+name: Rapport de bug
+description: Signaler une erreur dans le contenu ou le code
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de signaler ce bug ! Remplis le formulaire ci-dessous avec le plus de détails possible.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description du bug
+      description: Décris clairement ce qui se passe.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Étapes pour reproduire
+      description: Comment reproduire le problème ?
+      placeholder: |
+        1. Ouvrir le fichier ...
+        2. Lire la section ...
+        3. Constater l'erreur ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: attendu
+    attributes:
+      label: Comportement attendu
+      description: Que devrait-il se passer normalement ?
+    validations:
+      required: true
+
+  - type: textarea
+    id: captures
+    attributes:
+      label: Captures d'écran ou logs
+      description: Ajoute toute capture ou message d'erreur utile.
+
+  - type: dropdown
+    id: composant
+    attributes:
+      label: Module concerné
+      options:
+        - Linux
+        - MongoDB
+        - Docker
+        - pySpark
+        - Python
+        - Git
+        - Cloud
+        - SQL
+        - Airflow
+        - Utils / Scripts
+        - CI / GitHub Actions
+        - Documentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: contexte
+    attributes:
+      label: Contexte supplémentaire
+      description: Toute autre information utile.

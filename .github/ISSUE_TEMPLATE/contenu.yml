@@ -1,0 +1,67 @@
+name: Demande de contenu
+description: Proposer l'ajout ou l'amélioration de contenu pédagogique
+labels: [contenu]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci pour ta proposition ! Décris ta demande avec le plus de précision possible.
+
+  - type: textarea
+    id: besoin
+    attributes:
+      label: Problème ou besoin
+      description: Quel manque ou problème pédagogique cette demande adresse-t-elle ?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposition
+    attributes:
+      label: Contenu proposé
+      description: Décris ce que tu voudrais voir ajouté ou amélioré.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives envisagées
+      description: Y a-t-il d'autres approches que tu as considérées ?
+
+  - type: dropdown
+    id: composant
+    attributes:
+      label: Module concerné
+      options:
+        - Linux
+        - MongoDB
+        - Docker
+        - pySpark
+        - Python
+        - Git
+        - Cloud
+        - SQL
+        - Airflow
+        - Utils / Scripts
+        - Documentation
+        - Nouveau module
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priorite
+    attributes:
+      label: Priorité estimée
+      options:
+        - Haute — bloque la progression
+        - Moyenne — amélioration utile
+        - Basse — nice to have
+    validations:
+      required: true
+
+  - type: textarea
+    id: contexte
+    attributes:
+      label: Contexte supplémentaire
+      description: Références, exemples similaires, captures d'écran, etc.

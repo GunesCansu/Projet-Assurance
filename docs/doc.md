@@ -1,0 +1,1 @@
+A toi d'écrire la documentation d'utilisation de tes notebooks et de tes scripts Python. Explique comment les utiliser, quelles sont les dépendances nécessaires, et donne des exemples d'utilisation. N'oublie pas d'inclure des instructions pour l'installation des bibliothèques requises et des conseils pour résoudre les problèmes courants.
