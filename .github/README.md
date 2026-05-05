@@ -10,6 +10,3 @@ Comprendre la structure des contrats d’assurance‑vie
 Analyser des indicateurs simples (montants, durée, évolution)
 Pratiquer l’analyse de données avec Python
 
-git add .github/README.md
-git commit -m "docs: describe project objective and scope"
-git push
